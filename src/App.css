@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 40px 80px;
+}
+
+.input-container,
+.result-container {
+  width: 50%;
+}
+
+#input {
+  white-space-collapse: break-spaces;
+  overflow-wrap: anywhere;
+}
