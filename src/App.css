@@ -11,5 +11,27 @@
 
 #input {
   white-space-collapse: break-spaces;
-  overflow-wrap: anywhere;
+  text-wrap: nowrap;
+  overflow: auto;
+}
+
+.spoiler {
+  filter: blur(5px);
+}
+
+.tab-container {
+  display: flex
+}
+
+.tab-button {
+  flex-grow: 1;
+}
+
+.multiline-text {
+  white-space: pre-wrap;
+}
+
+.line-numbers {
+  text-align: right;
+  white-space: pre-wrap;
 }
