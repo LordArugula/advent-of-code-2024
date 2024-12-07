@@ -4,7 +4,7 @@ import { expecteds } from "./expected";
 
 import "./App.css"
 
-function solve(day: number, part: number, input: string) {
+async function solve(day: number, part: number, input: string) {
   const aocDay = days[day - 1];
   if (!aocDay) {
     return `Day ${day} not completed :3`;
@@ -12,9 +12,9 @@ function solve(day: number, part: number, input: string) {
 
   switch (part) {
     case 1:
-      return aocDay.part1(input);
+      return await aocDay.part1(input);
     case 2:
-      return aocDay.part2(input);
+      return await aocDay.part2(input);
     default:
       throw new Error("Unreachable");
   }
@@ -72,15 +72,17 @@ function App() {
           break;
       }
     }
+    
+    setResult("Processing :3");
 
-    try {
-      const result = solve(day, part, input);
-      setResult(result || ":3");
-    } catch (err) {
-      if (err instanceof Error) {
+    solve(day, part, input)
+      .then(result => {
+        setResult(result.toString() || ":3");
+      })
+      .catch((err: Error) => {
         setResult(err.message);
-      }
-    }
+        console.log(err);
+      })
   }, [part, input]);
 
   return (
@@ -88,9 +90,9 @@ function App() {
       <div className="container">
         <div className="input-container">
           <h1>Input</h1>
-          <div style={{ display: "flex", gap: "20px" }} className={isSpoiler && !isTest ? "spoiler" : undefined}>
+          <div className={["multiline-text-container", isSpoiler && !isTest ? "spoiler" : undefined].join(" ")}>
             <div className="line-numbers">{input.split("\n").map((_, idx) => idx + 1).join("\n")}</div>
-            <div id="input">{input}</div>
+            <div className="multiline-text">{input}</div>
           </div>
         </div>
         <div className="result-container">
@@ -147,9 +149,14 @@ function App() {
                         <button type="button" id="copy-button" onClick={async () => await navigator.clipboard.writeText(result.trim())}>Copy</button>
                       </div>
                     </div>
-                    <div style={{ display: "flex", gap: "20px" }} className={isSpoiler && !isTest ? "spoiler" : undefined}>
-                      {result && <div className="line-numbers">{result.split("\n").map((_, idx) => idx + 1).join("\n")}</div>}
-                      <div className="multiline-text">{result}</div>
+                    <div className={["multiline-text-container", isSpoiler && !isTest ? "spoiler" : undefined].join(" ")}>
+                      {
+                        result && result.split("\n").length > 1 &&
+                        <div className="line-numbers">
+                          {result.split("\n").map((_, idx) => idx + 1).join("\n")}
+                        </div>
+                      }
+                      <div className="multiline-text output">{result}</div>
                     </div>
                   </div>
                 </>

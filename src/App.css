@@ -9,12 +9,6 @@
   width: 50%;
 }
 
-#input {
-  white-space-collapse: break-spaces;
-  text-wrap: nowrap;
-  overflow: auto;
-}
-
 .spoiler {
   filter: blur(5px);
 }
@@ -27,8 +21,15 @@
   flex-grow: 1;
 }
 
+.multiline-text-container {
+  display: flex;
+  gap: 20px;
+}
+
 .multiline-text {
   white-space: pre-wrap;
+  text-wrap: nowrap;
+  overflow: auto;
 }
 
 .line-numbers {
