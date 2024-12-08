@@ -1,3 +1,5 @@
+import { Point } from "../utils/Point";
+
 export function part1(input: string): string {
     const grid = input.split("\n").slice(0, -1)
         .map(line => line.split(""));
@@ -90,11 +92,6 @@ export function part1(input: string): string {
 
     return spacesWalked.toString();
 }
-
-type Point = {
-    row: number,
-    col: number
-};
 
 export function part2(input: string): string {
     const grid = input.split("\n").slice(0, -1)
@@ -232,14 +229,14 @@ export function part2(input: string): string {
     }
 
     return loopingObstacles
-    // remove duplicates
         .filter((obstacle, index, arr) => {
+            // remove duplicates
             return index === arr.findIndex(obst => obstacle.row === obst.row && obstacle.col === obst.col)
                 && !obstacles.find(obst => obstacle.row === obst.row && obstacle.col === obst.col)
         })
-    // remove errors
         .filter((obstacle) => {
-            return willLoop({ row: startRow!, col: startCol!}, 0, [...obstacles, obstacle])
+            // remove errors
+            return willLoop({ row: startRow!, col: startCol! }, 0, [...obstacles, obstacle])
         })
         .length.toString();
 }
