@@ -66,6 +66,9 @@ export function part2(input: string): string {
         return offset + blockSize;
     }, 0);
 
+
+    console.log(performance.now());
+
     for (let rFileId = filesystem.length - 1; rFileId >= 0; rFileId--) {
         let lastFile = filesystem[rFileId];
         if (lastFile.moved === true) {
@@ -92,11 +95,14 @@ export function part2(input: string): string {
                     rFileId++;
                     break;
                 }
+                offset = file.offset;
+            } else {
+                offset += file.size;
             }
-            offset++;
         }
     }
 
+    console.log(performance.now());
     let checksum = 0;
     let fileId = 0;
     let offset = 0;
@@ -116,5 +122,7 @@ export function part2(input: string): string {
         }
         offset++;
     }
+
+    console.log(performance.now());
     return checksum.toString();
 }
