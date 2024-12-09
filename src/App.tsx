@@ -124,8 +124,8 @@ function App() {
             </form>
           </div>
           <div className="tab-container">
-            <button className="tab-button" onClick={() => setPart(1)}>Part 1</button>
-            <button className="tab-button" onClick={() => setPart(2)}>Part 2</button>
+            <button type="button" className={["tab-button", part === 1 && "active"].join(" ")} onClick={() => setPart(1)}>Part 1</button>
+            <button type="button" className={["tab-button", part === 2 && "active"].join(" ")} onClick={() => setPart(2)}>Part 2</button>
           </div>
           <div>
             {

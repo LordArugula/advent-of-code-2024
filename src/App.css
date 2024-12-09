@@ -14,11 +14,25 @@
 }
 
 .tab-container {
-  display: flex
+  display: flex;
+  gap: 2px;
 }
 
 .tab-button {
   flex-grow: 1;
+  height: 40px;
+  border-width: 3px 0px;
+  border-color: black;
+  background-color: #D0D0D0;
+}
+
+.tab-button:active {
+  background-color: white;
+}
+
+.tab-button.active {
+  background-color: #f0f0f0;
+  border-top-color: #d19424;
 }
 
 .multiline-text-container {
