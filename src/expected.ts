@@ -10,5 +10,6 @@ export const expecteds: DayExpectedResults[] = [
     { part1: 14, part2: 34 },
     { part1: 1928, part2: 2858 },
     { part1: 36, part2: 81 },
+    { part1: 55312, part2: undefined },
     { part1: undefined, part2: undefined },
 ];
