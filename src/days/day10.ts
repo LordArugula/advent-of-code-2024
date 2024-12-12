@@ -1,5 +1,4 @@
-import { Point } from "../utils/Point";
-type PointString = `${number},${number}`;
+import { Point, PointString } from "../utils/Point";
 
 export function part1(input: string): string {
     const topoMap = input.split("\n").slice(0, -1)
