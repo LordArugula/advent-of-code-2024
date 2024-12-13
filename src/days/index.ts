@@ -10,6 +10,7 @@ import * as day9 from "./day9";
 import * as day10 from "./day10";
 import * as day11 from "./day11";
 import * as day12 from "./day12";
+import * as day13 from "./day13";
 
 type Day = {
     part1(input: string): number | string | Promise<number | string>;
@@ -28,5 +29,6 @@ const days: Day[] = [
     day10,
     day11,
     day12,
+    day13,
 ];
 export default days;
