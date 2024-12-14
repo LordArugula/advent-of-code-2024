@@ -4,7 +4,7 @@ import { expecteds } from "./expected";
 
 import "./App.css"
 
-async function solve(day: number, part: number, input: string) {
+async function solve(day: number, part: number, input: string, isTest: boolean) {
   const aocDay = days[day - 1];
   if (!aocDay) {
     return `Day ${day} not completed :3`;
@@ -12,9 +12,9 @@ async function solve(day: number, part: number, input: string) {
 
   switch (part) {
     case 1:
-      return await aocDay.part1(input);
+      return await aocDay.part1(input, isTest);
     case 2:
-      return await aocDay.part2(input);
+      return await aocDay.part2(input, isTest);
     default:
       throw new Error("Unreachable");
   }
@@ -75,7 +75,7 @@ function App() {
     
     setResult("Processing :3");
 
-    solve(day, part, input)
+    solve(day, part, input, isTest)
       .then(result => {
         setResult(result.toString() || ":3");
       })
