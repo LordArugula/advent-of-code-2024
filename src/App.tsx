@@ -37,7 +37,7 @@ function App() {
   const [part, setPart] = useState(1);
   const [isTest, setIsTest] = useState(false);
   const [isSpoiler, setIsSpoiler] = useState(false);
-  const [input, setInput] = useState("uwu");
+  const [input, setInput] = useState("");
   const [result, setResult] = useState(":3");
   const [expected, setExpected] = useState(">:3");
 
@@ -59,6 +59,10 @@ function App() {
   }, [day, isTest]);
 
   useEffect(() => {
+    if (!input) {
+      return;
+    }
+
     if (isTest) {
       const expect = expecteds[day - 1];
       switch (part) {
