@@ -59,7 +59,7 @@ function App() {
   }, [day, isTest]);
 
   useEffect(() => {
-    if (input === "") {
+    if (input === undefined || input === "") {
       return;
     }
 

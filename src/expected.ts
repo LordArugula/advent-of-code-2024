@@ -1,4 +1,4 @@
-type DayExpectedResults = { part1: number | undefined, part2: number | undefined };
+type DayExpectedResults = { part1: number | string | undefined, part2: number | string | undefined };
 export const expecteds: DayExpectedResults[] = [
     { part1: 11, part2: 31 },
     { part1: 2, part2: 4 },
@@ -16,5 +16,6 @@ export const expecteds: DayExpectedResults[] = [
     { part1: 12, part2: undefined },
     { part1: 10092, part2: 9021 },
     { part1: 11048, part2: 64 },
+    { part1: "4,6,3,5,6,3,5,2,1,0", part2: 117440 },
     { part1: undefined, part2: undefined },
 ];
