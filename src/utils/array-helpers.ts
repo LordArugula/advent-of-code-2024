@@ -6,3 +6,15 @@ export function zip<T1, T2, K>(a: Array<T1>, b: Array<T2>, func: (a: T1, b: T2) 
     }
     return result;
 }
+
+export function chunk<T>(arr: Array<T>, size: number): Array<Array<T>> {
+    let i = 0;
+    const chunks: Array<T>[] = [];
+
+    while (i < arr.length) {
+        chunks.push(arr.slice(i, i + size));
+        i += size;
+    }
+
+    return chunks;
+}

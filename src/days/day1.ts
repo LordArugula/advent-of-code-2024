@@ -1,4 +1,4 @@
-import { zip } from "../utils/zip";
+import { zip } from "../utils/array-helpers";
 
 export function part1(input: string): string {
     const lines = input.split("\n").slice(0, -1);
