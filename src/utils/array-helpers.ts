@@ -18,3 +18,15 @@ export function chunk<T>(arr: Array<T>, size: number): Array<Array<T>> {
 
     return chunks;
 }
+
+export function windows<T>(arr: Array<T>, size: number): Array<Array<T>> {
+    let i = 0;
+    const windows: Array<Array<T>> = [];
+
+    while (i + size <= arr.length) {
+        windows.push(arr.slice(i, i + size));
+        i++;
+    }
+
+    return windows;
+}
