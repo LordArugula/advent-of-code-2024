@@ -1,8 +1,5 @@
 type Computer = string;
-type LanNode = {
-    computer: Computer;
-    connections: Set<Computer>;
-}
+type LanConnections = Set<Computer>;
 
 export function part1(input: string): string {
     const nodes = input.split("\n").slice(0, -1)
@@ -14,44 +11,39 @@ export function part1(input: string): string {
 
             let nodeA = nodes.get(a);
             if (nodeA === undefined) {
-                nodeA = {
-                    computer: a,
-                    connections: new Set(),
-                };
+                nodeA = new Set();
                 nodes.set(a, nodeA);
             }
 
             let nodeB = nodes.get(b);
             if (nodeB === undefined) {
-                nodeB = {
-                    computer: b,
-                    connections: new Set(),
-                };
+                nodeB = new Set();
                 nodes.set(b, nodeB);
             }
 
-            nodeA.connections.add(b);
-            nodeB.connections.add(a);
+            nodeA.add(b);
+            nodeB.add(a);
 
             return nodes;
-        }, new Map<Computer, LanNode>());
+        }, new Map<Computer, LanConnections>());
 
     const triples = new Set<`${Computer},${Computer},${Computer}`>();
-    for (const nodeA of nodes.values()) {
-        nodeA.connections.forEach(nodeBName => {
-            const nodeB = nodes.get(nodeBName)!;
-            nodeB.connections.forEach(nodeCName => {
-                const nodeC = nodes.get(nodeCName)!;
-                nodeC.connections.forEach(nodeD => {
-                    if (nodeD === nodeA.computer) {
-                        const nodes = [nodeA.computer, nodeB.computer, nodeC.computer];
-                        if (!nodes.some(node => node.startsWith("t"))) {
-                            return;
-                        }
-                        const [x, y, z] = [nodeA.computer, nodeB.computer, nodeC.computer].sort();
-                        triples.add(`${x},${y},${z}`);
-                    }
-                });
+    for (const [nodeA, connectionsA] of nodes) {
+        connectionsA.forEach(nodeB => {
+            const connectionsB = nodes.get(nodeB)!;
+            connectionsB.forEach(nodeC => {
+                const connectionsC = nodes.get(nodeC)!;
+                if (!connectionsC.has(nodeA)) {
+                    return;
+                }
+
+                const triple = [nodeA, nodeB, nodeC];
+                if (!triple.some(node => node.startsWith("t"))) {
+                    return;
+                }
+
+                const [a, b, c] = triple.sort();
+                triples.add(`${a},${b},${c}`);
             })
         });
     }
@@ -60,5 +52,59 @@ export function part1(input: string): string {
 }
 
 export function part2(input: string): string {
-    return ":3";
+    const nodes = input.split("\n").slice(0, -1)
+        .map(edge => {
+            return edge.split("-");
+        })
+        .reduce((nodes, edge) => {
+            const [a, b] = edge;
+
+            let nodeA = nodes.get(a);
+            if (nodeA === undefined) {
+                nodeA = new Set();
+                nodes.set(a, nodeA);
+            }
+
+            let nodeB = nodes.get(b);
+            if (nodeB === undefined) {
+                nodeB = new Set();
+                nodes.set(b, nodeB);
+            }
+
+            nodeA.add(b);
+            nodeB.add(a);
+
+            return nodes;
+        }, new Map<Computer, LanConnections>());
+    
+    const groups = new Set<string>();
+    for (const [nodeA, _] of nodes) {
+        getGroups(nodeA, new Set<Computer>(), groups, nodes);
+    }
+
+    return [...groups].reduce((largest, group) => {
+      if (group.length > largest.length) {
+        return group;
+      }
+      return largest;
+    }, "");
+}
+
+function getGroups(computer: Computer, group: Set<Computer>, groups: Set<string>, graph: Map<Computer, LanConnections>) {
+    group.add(computer);
+
+    const connections = graph.get(computer)!;
+    for (const nodeB of connections) {
+        if (group.has(nodeB)) {
+            continue;
+        }
+
+        const connectionsB = graph.get(nodeB)!;
+
+        if (connectionsB.has(computer)) {
+            getGroups(nodeB, new Set<Computer>(group), groups, graph);
+        }
+    }
+
+    groups.add([...group].sort().join(","));
 }
